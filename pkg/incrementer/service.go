@@ -1,4 +1,4 @@
-package incrementor
+package incrementer
 
 import (
 	"context"
@@ -14,7 +14,7 @@ type (
 	Incrementer interface {
 
 		//GetNumber возвращает текущее значение переменной
-		GetNumber(context.Context) (int64, error)
+		GetNumber(context.Context) (uint64, error)
 
 		//IncrementNumber инкрементирует значение переменной
 		IncrementNumber(context.Context) error
@@ -30,7 +30,7 @@ type (
 		//MaxValue максимальное значение переменной, до которой
 		//будет увеличиваться циклически по модулю.
 		//Если MaxValue == 0, считается, что максимальное значение не задано
-		MaxValue      uint64
+		MaxValue uint64
 	}
 
 	NewIncrementerDTO struct {

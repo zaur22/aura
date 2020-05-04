@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package aura;
+option go_package = "/api";
+
+service Incrementer{
+    rpc GetNumber(GetNumberRequest) returns (GetNumberResponse){}
+    rpc IncrementNumber(IncrementNumberResponse) returns(IncrementNumberResponse) {}
+    rpc SetSettings(SetSettingsRequest) returns(SetSettingsResponse){}
+}
+
+message GetNumberRequest {
+}
+
+message GetNumberResponse {
+    uint64 value = 1;
+}
+
+message IncrementNumberRequest {
+}
+
+message IncrementNumberResponse {
+}
+
+message SetSettingsRequest{
+    uint64 maxValue = 1;
+    uint64 incrementStep = 2;
+}
+
+message SetSettingsResponse{
+}

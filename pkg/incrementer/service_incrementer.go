@@ -1,14 +1,14 @@
-package incrementor
+package incrementer
 
 import (
 	"context"
 	"github.com/jmoiron/sqlx"
 )
 
-type(
+type (
 	entity struct {
-		CurrentValue int64 `db:"current_value"`
-		MaxValue int64	`db:"max_value"`
+		CurrentValue  int64 `db:"current_value"`
+		MaxValue      int64 `db:"max_value"`
 		IncrementStep int64 `db:"increment_step"`
 	}
 
@@ -22,7 +22,7 @@ func newIncrementer(dto NewIncrementerDTO) (Incrementer, error) {
 		db: dto.DB,
 	}
 
-	if err := inc.init(); err != nil{
+	if err := inc.init(); err != nil {
 		return nil, err
 	}
 
@@ -33,16 +33,14 @@ func (inc *incrementer) init() error {
 	panic("not implemented")
 }
 
-func (inc *incrementer) GetNumber(context.Context) (int64, error){
+func (inc *incrementer) GetNumber(context.Context) (int64, error) {
 	panic("not implemented")
 }
 
-func (inc *incrementer)  IncrementNumber(context.Context) error{
+func (inc *incrementer) IncrementNumber(context.Context) error {
 	panic("not implemented")
 }
 
-func (inc *incrementer) SetSettings(context.Context, SetSettingsDTO) error{
+func (inc *incrementer) SetSettings(context.Context, SetSettingsDTO) error {
 	panic("not implemented")
 }
-
-

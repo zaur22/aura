@@ -8,11 +8,11 @@ import (
 	"os"
 )
 
-func main(){
+func main() {
 	os.Exit(Serve())
 }
 
-func Serve() (ret int){
+func Serve() (ret int) {
 	defer func() {
 		if r := recover(); r != nil {
 			ret = 1
@@ -41,8 +41,8 @@ func Serve() (ret int){
 		}
 	}()
 
-	_, err := incrementor.NewIncrementer(
-		incrementor.NewIncrementerDTO{
+	_, err := incrementer.NewIncrementer(
+		incrementer.NewIncrementerDTO{
 			DB: dbConnect,
 		})
 
