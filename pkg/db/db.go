@@ -1,31 +1,50 @@
 package db
 
 import (
+	"context"
+	"database/sql/driver"
 	"fmt"
+	"github.com/jackc/pgx/v4"
+	"github.com/jackc/pgx/v4/stdlib"
 	"github.com/jmoiron/sqlx"
-
-	_ "github.com/lib/pq"
+	"github.com/prometheus/common/log"
+	"time"
 )
 
 type ConnectDTO struct {
 	Host     string
+	Port     uint16
 	UserName string
 	Password string
 	DBName   string
 	SSLMode  string
 }
 
-func Connect(dto ConnectDTO) *sqlx.DB {
-	db, err := sqlx.Connect(
-		"postgres",
-		fmt.Sprintf(
-			"user=%v password=%v dbname=%v host=%v sslmode=%v",
-			dto.UserName, dto.Password, dto.DBName, dto.Host, dto.SSLMode),
-	)
+func Connect(ctx context.Context, dto ConnectDTO) *sqlx.DB {
 
-	if err != nil {
-		panic(fmt.Sprintf("could not connect to db: %v\n", err))
+	config, _ := pgx.ParseConfig("")
+	config.Host = dto.Host
+	config.Port = dto.Port
+	config.User = dto.UserName
+	config.Password = dto.Password
+	config.Database = dto.DBName
+
+	db := stdlib.OpenDB(*config)
+
+	pingCount := 0
+	var err error
+	for err = db.Ping(); err == driver.ErrBadConn; {
+		log.Infof("Can't ping database. Waiting to retrying 200 ms...\n")
+		time.Sleep(200 * time.Millisecond)
+		pingCount++
+		if pingCount == 3 {
+			panic(fmt.Errorf("can't connect to DB, bad connection: %v", err))
+		}
 	}
 
-	return db
+	if err != nil {
+		panic(fmt.Errorf("can't connect to DB: %v", err))
+	}
+
+	return sqlx.NewDb(db, "psx")
 }

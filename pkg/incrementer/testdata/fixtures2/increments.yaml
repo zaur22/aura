@@ -1,0 +1,4 @@
+- id: 10001
+  current_value: 5
+  max_value: 11
+  increment_step: 10

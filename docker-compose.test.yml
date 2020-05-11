@@ -1,15 +1,10 @@
 version: '3.8'
 
-x-postgres-variables: &postgres-variables
-    extends:
-      file: docker-compose.yml
-      service: x-postgres-variables
-
 services:
   unit:
     image: golang:1.14
     volumes:
-      - .:/usr/src/app:ro
+      - .:/usr/src/app
     working_dir: /usr/src/app
     env_file:
       - .env
@@ -22,7 +17,7 @@ services:
     depends_on:
       - postgres
     volumes:
-      - .:/usr/src/app:ro
+      - .:/usr/src/app
     working_dir: /usr/src/app
     env_file:
       - .env
@@ -33,7 +28,7 @@ services:
   build:
     image: golang:1.14
     volumes:
-      - .:/usr/src/app:ro
+      - .:/usr/src/app
     working_dir: /usr/src/app
     env_file:
       - .env
@@ -49,7 +44,6 @@ services:
     env_file:
       - .env
     command: >
-        bash -c "go get -tags 'postgres' -u github.com/golang-migrate/migrate/cmd/migrate
-        && go install -tags 'postgres' github.com/golang-migrate/migrate/cmd/migrate
-        && URI='postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}?sslmode=disable'
-        && migrate -source f  ile:///usr/src/migrations -database '$${URI}' up"
+        bash -c "go get -tags 'postgres' -u github.com/golang-migrate/migrate/cmd/migrate && \
+          echo 'downloaded' && go install -tags 'postgres' github.com/golang-migrate/migrate/cmd/migrate && \
+          migrate -source file:///usr/src/migrations -database postgres://$${DB_USER}:$${DB_PASSWORD}@$${DB_HOST}/$${DB_NAME}?sslmode=disable up"

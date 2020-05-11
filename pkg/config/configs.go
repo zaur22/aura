@@ -8,10 +8,11 @@ import (
 type (
 	defValue interface{}
 	Configs  struct {
-		DBUsername  string `mapstructure:"db_username"`
+		DBUsername  string `mapstructure:"db_user"`
 		DBPassword  string `mapstructure:"db_password"`
 		DBName      string `mapstructure:"db_name"`
 		DBHost      string `mapstructure:"db_host"`
+		DBPort      uint16 `mapstructure:"db_port"`
 		SSLMode     string `mapstructure:"ssl_mode"`     // postgres ssl_mode
 		HttpAddress string `mapstructure:"http_address"` // address for http server
 		LogLevel    string `mapstructure:"log_level"`    // log level one of: debug, info, warn, error, fatal
@@ -22,12 +23,13 @@ func GetConfigs() Configs {
 	var c Configs
 
 	var envs = map[string]defValue{
-		"db_username":  "",
+		"db_user":      "",
 		"db_password":  "",
 		"db_name":      "postgres",
-		"db_host":      "localhost:5432",
+		"db_host":      "localhost",
+		"db_port":      5432,
 		"ssl_mode":     "disable",
-		"http_address": ":3030",
+		"http_address": ":9090",
 		"log_level":    "debug",
 	}
 

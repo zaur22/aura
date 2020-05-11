@@ -5,7 +5,7 @@ import (
 	"github.com/zaur22/aura/pkg/rpc/api"
 )
 
-func convSetSettings(in *api.SetSettingsRequest) incrementer.SetSettingsDTO{
+func convSetSettings(in *api.SetSettingsRequest) incrementer.SetSettingsDTO {
 	return incrementer.SetSettingsDTO{
 		IncrementStep: (*in).IncrementStep,
 		MaxValue:      (*in).MaxValue,

@@ -9,6 +9,7 @@ import (
 type rpc struct {
 	incrementer incrementer.Incrementer
 }
+
 func newIncrementerServer(incr incrementer.Incrementer) api.IncrementerServer {
 	return &rpc{
 		incrementer: incr,
@@ -32,7 +33,7 @@ func (r *rpc) GetNumber(
 
 func (r *rpc) IncrementNumber(
 	ctx context.Context,
-	_ *api.IncrementNumberResponse) (*api.IncrementNumberResponse, error) {
+	_ *api.IncrementNumberRequest) (*api.IncrementNumberResponse, error) {
 
 	err := r.incrementer.IncrementNumber(ctx)
 	if err != nil {

@@ -1,6 +1,5 @@
 
 
-
 # tests запускает все виды тестирования
 tests: tests-unit tests-integrations test-build
 

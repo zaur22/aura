@@ -5,7 +5,7 @@ option go_package = "/api";
 
 service Incrementer{
     rpc GetNumber(GetNumberRequest) returns (GetNumberResponse){}
-    rpc IncrementNumber(IncrementNumberResponse) returns(IncrementNumberResponse) {}
+    rpc IncrementNumber(IncrementNumberRequest) returns(IncrementNumberResponse) {}
     rpc SetSettings(SetSettingsRequest) returns(SetSettingsResponse){}
 }
 

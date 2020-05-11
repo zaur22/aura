@@ -25,20 +25,20 @@ type (
 
 	SetSettingsDTO struct {
 		//IncrementStep значение шага инкрементрования
-		IncrementStep uint64
+		IncrementStep uint64 `json:"increment_step"`
 
 		//MaxValue максимальное значение переменной, до которой
 		//будет увеличиваться циклически по модулю.
 		//Если MaxValue == 0, считается, что максимальное значение не задано
-		MaxValue uint64
+		MaxValue uint64 `json:"max_value"`
 	}
 
 	NewIncrementerDTO struct {
-		DB *sqlx.DB
+		DBClient *sqlx.DB
 	}
 )
 
-//NewIncrementer конструктор нового сервиса Incrementor
-func NewIncrementer(dto NewIncrementerDTO) (Incrementer, error) {
-	panic("not implemented")
+//NewIncrementer конструктор нового сервиса Incrementer
+func NewIncrementer(ctx context.Context, dto NewIncrementerDTO) (Incrementer, error) {
+	return newIncrementer(ctx, dto)
 }

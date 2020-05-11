@@ -9,7 +9,7 @@ services:
     depends_on:
       - postgres
     ports:
-      - "3030:3030"
+      - "9090:9090"
     env_file:
       - .env
 
